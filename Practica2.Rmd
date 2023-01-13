@@ -38,13 +38,25 @@ library(readr)
 
 
 ```{r}
-#Carreguem les dades i les visualitzem
+# Carreguem les dades i les visualitzem
 data <- read_csv("heart.csv", show_col_types = FALSE)
 head(data, 10)
 ```
 ```{r}
 dim(data)
 ```
+```{r}
+# Renombrem les variables perquè s'entenguin millor
+library(dplyr)
+data = rename(data, c("chest_pain"="cp","cholesterol"="chol",
+                     "exercise_induced_angina"="exng","vessels_numbers"="caa",
+                     "blood_pressure"="trtbps","fasting_blood_sugar"="fbs",
+                     "max_heart_rate_achieved"="thalachh","stress_test"="thall"))
+```
+
+
+
+
 ```{r}
 str(data)
 ```
@@ -53,28 +65,75 @@ summary(data)
 ```
 
 
-Per arribar a l'objectiu proposat, s'han escollit...
+Per arribar a l'objectiu proposat, de les 14 variables originals s'han escollit 7 que podrien jugar un paper important en el que es vol avaluar:
+
+- age
+- sex
+- blood_pressure
+- cholesterol
+- fasting_blood_sugar
+- exercise_induced_angina
+- max_heart_rate_achieved
+
+```{r}
+# Creem el nou dataset amb les variables mencionades
+data1 <- data.frame(data$age, data$sex, data$blood_pressure, data$cholesterol, data$fasting_blood_sugar, data$max_heart_rate_achieved, data$exercise_induced_angina)
+```
+
+```{r}
+# Visualitzem el nou dataset
+head(data, 10)
+```
+
 
 # 3. Neteja de les dades
 ## 3.1 Zeros i elements buits
 ```{r}
 # Comprovem si les dades contenen elements nuls
-any(is.null(data))
+any(is.null(data1))
 ```
 Les dades no contenen cap dada nul·la, pel que no s'ha de fer res.
 
 ```{r}
 # Comprovem si contenen element buits
-any(is.na(data))
+any(is.na(data1))
 ```
 Les dades no contenen cap element buit, pel que es deixa com està.
+
+Comprovem també si el dataset conté dades duplicades mitjançant l'extracció de dades úniques:
+```{r}
+library(tidyverse)
+data2 <- unique(data1)
+dim(data2)
+```
+Com es pot veure, les files han passat de ser 303 a 302. Per tant, s'ha eliminat un registre.
 
 ## 3.2 Valors extrems
 ```{r}
 # Detectem valors extrems amb boxplots
-data.bp <- boxplot(data)
+boxplot(data2)
+```
+Gràcies als boxplot, es pot veure 4 variables que presenten outliers i quines són. Per tant, les mirem més de prop:
+
+```{r}
+blood_pressure_bp <- boxplot(data2$data.blood_pressure)
+cholesterol_bp <- boxplot(data2$data.cholesterol)
+max_heart_rate_achieved_bp <- boxplot(data2$data.max_heart_rate_achieved)
+```
+
+```{r}
+blood_pressure_outliers <- blood_pressure_bp$out
 ```
 ```{r}
-data.bp$out
+cholesterol_outliers <- cholesterol_bp$out
+```
+```{r}
+max_heart_rate_achieved_outliers <- max_heart_rate_achieved_bp$out
+```
+Com que tenim molts registres i amb les dades que tenim no es podria veure el motiu de perquè aquests valors són extrems, s'ha optat per eliminar-los.
+
+```{r}
+data3 <- data2[!(data2$data.blood_pressure == blood_pressure_outliers| data2$cholesterol ==  cholesterol_outliers | data2$max_heart_rate_achieved == max_heart_rate_achieved_outliers),]
+data3
 ```
 
