@@ -1,0 +1,80 @@
+---
+title: 'Pràctica 2: Com realitzar la neteja i l''anàlisi de dades?'
+author: "Maria Magdalena Dicheva"
+date: "13/1/2023"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Descripció del dataset
+
+Per aquesta pràctica, s'ha escollit treballar amb el dataset proposat per identificar els factors de risc que influeixen en els atacs cardíacs. Aquest estudi és important per concienciar a la població i que els individus siguin capaços d'evitar conductes de risc i de detectar símptomes que indiquin quan un atac és imminent o ja s'està produint. Així, poden demanar ajuda i reduir la gravetat i les conseqüències al mínim.
+
+Abans del processament del dataset, aquest conté 14 columnes:
+
+- Age: edat del pacient mesurada en anys
+- Sex: sexe del pacient (1 = home, 0 = dona)
+- exang: angina induïda per exercici (1 = si, 0 = no)
+- ca: nombre de vasos sanguinis (0-3)
+- cp: tipus de dolor al pit (4 valors possibles)
+- trtbps: pressió sanguínia en repòs mesurada en mm/Hg
+- chol: nivell de colesterol mesurat en mg/dl
+- fbs: nivell de sucre en sang en dejú > 120mg/dl (1 = true, 0 = false)
+- rest_ecg: resultats electrocardiogràfics en repòs (2 valors possibles)
+- thalach: freqüència cardíaca màxima a la que s'ha arribat
+- target: 0 = probabilitat menor d'atac cardíac, 1 = probabilitat major d'atac cardíac
+- oldpeak: depressió del segment ST induïda per exercici relatiu
+- slp: tipus d'inclinació del segment ST durant el pic màxim d'exercici ( 3 valors possibles)
+
+Les dades es poden trobar a Kaggle: https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset.
+
+# 2. Integració i selecció
+```{r}
+library(readr)
+```
+
+
+```{r}
+#Carreguem les dades i les visualitzem
+data <- read_csv("heart.csv", show_col_types = FALSE)
+head(data, 10)
+```
+```{r}
+dim(data)
+```
+```{r}
+str(data)
+```
+```{r}
+summary(data)
+```
+
+
+Per arribar a l'objectiu proposat, s'han escollit...
+
+# 3. Neteja de les dades
+## 3.1 Zeros i elements buits
+```{r}
+# Comprovem si les dades contenen elements nuls
+any(is.null(data))
+```
+Les dades no contenen cap dada nul·la, pel que no s'ha de fer res.
+
+```{r}
+# Comprovem si contenen element buits
+any(is.na(data))
+```
+Les dades no contenen cap element buit, pel que es deixa com està.
+
+## 3.2 Valors extrems
+```{r}
+# Detectem valors extrems amb boxplots
+data.bp <- boxplot(data)
+```
+```{r}
+data.bp$out
+```
+
