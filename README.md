@@ -5,7 +5,7 @@ Repositori creat per la pràctica 2 de l'assignatura Tipologia i cicle de vida d
  - Maria Magdalena Vladislavova Dicheva
 
 ### Descripció dels fitxers:
- - dataset/: directori que conté el .csv resultant
+ - dades_finals.csv: fitxer amb les dades finals
  - practica2.Rmd: fitxer de RStudio que conté el codi generat per l'anàlisi
- - practica2.pdf: pdf amb les respostes a les preguntes
+ - practica2.pdf: document pdf amb les respostes a les preguntes
  - heart.csv: fitxer .csv amb les dades originals
