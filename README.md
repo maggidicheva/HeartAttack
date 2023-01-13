@@ -6,5 +6,5 @@ Repositori creat per la pràctica 2 de l'assignatura Tipologia i cicle de vida d
 
 ### Descripció dels fitxers:
  - dataset/: directori que conté el .csv resultant
- - source/: directori que conté l'script principal
+ - practica2.Rmd: fitxer de RStudio que conté el codi generat per l'anàlisi
  - practica2.pdf: pdf amb les respostes a les preguntes
