@@ -132,8 +132,14 @@ max_heart_rate_achieved_outliers <- max_heart_rate_achieved_bp$out
 ```
 Com que tenim molts registres i amb les dades que tenim no es podria veure el motiu de perquè aquests valors són extrems, s'ha optat per eliminar-los.
 
+He provat diferents funcions, però no m'he ensortit. Estaré atenta a la publicació de la solució.
+
+# Extracció de les dades a un fitxer .csv
+
+Exportem les dades a un fitxer .csv que es trobarà a github:
+
 ```{r}
-data3 <- data2[!(data2$data.blood_pressure == blood_pressure_outliers| data2$cholesterol ==  cholesterol_outliers | data2$max_heart_rate_achieved == max_heart_rate_achieved_outliers),]
-data3
+write.csv(data2, file = "C:/Users/adril/Desktop/UOC/Semestre 3/Tipologia i cicle de les dades/PRA2/dades_finals.csv", row.names = FALSE)
 ```
+
 
